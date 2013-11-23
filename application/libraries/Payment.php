@@ -97,10 +97,12 @@ class Payment extends GlobeAPI
             'access_token' => $this->accessToken
         );
 
+
+
         $fields = array_filter($fields);
 
         $response = $this->_curlPost($url, $fields);
-
+        
         return $this->getReturn($response, $bodyOnly);
     }
 }
