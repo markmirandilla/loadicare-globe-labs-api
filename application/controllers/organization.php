@@ -34,7 +34,7 @@ class organization extends MY_Controller {
 			benchmark_start(__METHOD__);
 			$this->set_required_fields(array('organization_id'));
 			$organization_id = $this->get('organization_id');
-			$result = $this->organization_model->get_node_by_id($organization_id);
+			$result = $this->organization_model->get_node_by_id($organization_id,FALSE);
 			benchmark_end(__METHOD__);
 			$this->response(array('result'=>$result));
 		} catch(Exception $e) {
