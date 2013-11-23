@@ -688,7 +688,7 @@ class MY_Model extends CI_Model {
 		{
 			if(isset($node->address) && has_value($node->address))
 			{
-				$node->address 	= ((!empty($node->address) && !is_array($node->address)) ? ((array) json_decode($node->address)):NULL);
+				//$node->address 	= ((!empty($node->address) && !is_array($node->address)) ? ((array) json_decode($node->address)):NULL);
 				$node->data 	= (isset($node->data) && has_value($node->data)) ? object_to_array($node->data) : NULL;
 			}
 			if(isset($node->data) && has_value($node->data))
