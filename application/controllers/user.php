@@ -9,7 +9,7 @@ class user extends MY_Controller {
 
 	public function v1_login_post()
 	{
-				try {
+		try {
 			benchmark_start(__METHOD__);
 			$this->load->library('FacebookOAuth');
 			$facebook = $this->facebookoauth;
@@ -112,9 +112,40 @@ class user extends MY_Controller {
     	}
 	}
 
-	public function v1_details_get()
+	public function v1_access_token_post()
 	{
+		try {
+			benchmark_start(__METHOD__);
+			$user_id = $this->post('user_id');
+			$code = $this->post('code');
 
+			if(!has_value($code)) throw new Exception('Paramter code is missing');
+			if(!has_value($user_id)) throw new Exception('Paramter user_id is missing');
+
+			$globelabs_config = $this->config->item('globelabs');
+
+			$this->load->library('GlobeApi');
+			$globe = $this->globeapi;
+			$auth = $globe->auth(
+					    $globelabs_config['app_id'],
+					    $globelabs_config['app_secret']
+					);
+			$response = $auth->getAccessToken($code);
+			if(isset($response['error'])) throw new Exception($response['error']);
+
+			$globe_access_token = $response['access_token'];
+			$globe_mobile_number = $response['subscriber_number'];
+
+			$data = array('mobile_number' => $globe_mobile_number,
+						  'globe_access_token' => $globe_access_token,
+						  'has_globe_access_token' => (int) 1);
+			$user_node = $this->user_model->set_as_public(TRUE)->update_node($user_id,$data);
+			benchmark_end(__METHOD__);
+			$this->response(array('result' => $user_node));
+		} catch(Exception $e) {
+    		benchmark_end(__METHOD__);
+    		$this->response(array('message' => $e->getMessage()),400);
+    	}
 	}
 
 

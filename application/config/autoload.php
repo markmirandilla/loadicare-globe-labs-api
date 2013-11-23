@@ -64,7 +64,7 @@ $autoload['libraries'] = array('database','session','utils');
 |	$autoload['helper'] = array('url', 'file');
 */
 
-$autoload['helper'] = array('common_helper','api_helper','cache_helper');
+$autoload['helper'] = array('common_helper','api_helper','cache_helper','debug_helper');
 
 
 /*
@@ -80,7 +80,7 @@ $autoload['helper'] = array('common_helper','api_helper','cache_helper');
 |
 */
 
-$autoload['config'] = array('rest','sns_keys');
+$autoload['config'] = array('rest','sns_keys','globelabs');
 
 
 /*

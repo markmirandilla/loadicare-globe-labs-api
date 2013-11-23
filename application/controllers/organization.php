@@ -28,6 +28,4 @@ class organization extends MY_Controller {
 		}
 	}
 
-	
-
 }

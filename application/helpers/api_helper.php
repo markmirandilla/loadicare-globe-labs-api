@@ -19,6 +19,8 @@
 function filter_user_node($user_node)
 {
 	if(!has_value($user_node) || !is_array($user_node)) return $user_node;
+	unset($user_node['mobile_number']);
+	unset($user_node['globe_access_token']);
 	unset($user_node['password']);
 	unset($user_node['data']);
     unset($user_node['date_updated']);
