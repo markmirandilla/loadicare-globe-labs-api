@@ -134,10 +134,6 @@ class user extends MY_Controller {
 			$result = $this->db->query($sql)->result();
 			$result = $this->recurring_charge_model->format_nodes($result);
 
-			/*
-			$fields = array('user_id' => $user_id);
-			$result = $this->recurring_charge_model->get_node_by_fields($fields,$limit,$offset);
-			*/
 			benchmark_end(__METHOD__);
 			$this->response(array('result' => $result));
 		} catch(Exception $e) {
@@ -151,7 +147,7 @@ class user extends MY_Controller {
 		try {
 			benchmark_start(__METHOD__);
 			$this->set_required_fields(array('recurring_id'));
-			$recurring_id = $this->get('recurring_id');
+			$recurring_id = $this->post('recurring_id');
 
 			$this->load->model('recurring_charge_model');
 			$this->recurring_charge_model->delete_node($recurring_id);
