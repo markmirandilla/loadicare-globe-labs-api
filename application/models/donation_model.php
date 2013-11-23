@@ -42,6 +42,7 @@ class Donation_model extends MY_Model {
 		$new_reference_no = 1 + (int) $reference_no;
 		$this->set_node_table(TABLE_ID_STORAGE)->update_node($id,array('reference_ctr'=>$new_reference_no));
 		$new_reference_no = str_pad($new_reference_no, 6,"0",STR_PAD_LEFT);
+		log_message('ERROR',"{$new_reference_no}");
 		return $new_reference_no;
 	}
 
@@ -85,7 +86,7 @@ class Donation_model extends MY_Model {
 			return FALSE;
 		} else 
 		{
-			$this->donation_model->increment_reference_no();
+			$this->increment_reference_no();
 			$server_reference_code = $response['amountTransaction']['serverReferenceCode'];
 				
 			$data = array('reference_no' => $reference_no,
