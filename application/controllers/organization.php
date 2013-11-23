@@ -28,9 +28,6 @@ class organization extends MY_Controller {
 		}
 	}
 
-	function v1_detail_get()
-	{
-
-	}
+	
 
 }

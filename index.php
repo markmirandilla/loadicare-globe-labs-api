@@ -19,6 +19,7 @@
  *
  */
 	define('ENVIRONMENT', 'development');
+	header('Access-Control-Allow-Origin: *');
 /*
  *---------------------------------------------------------------
  * ERROR REPORTING
