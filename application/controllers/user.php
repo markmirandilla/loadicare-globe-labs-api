@@ -112,7 +112,7 @@ class user extends MY_Controller {
     	}
 	}
 
-	
+
 
 	public function v1_recurring_get()
 	{
@@ -132,6 +132,24 @@ class user extends MY_Controller {
 
 			benchmark_end(__METHOD__);
 			$this->response(array('result' => $result));
+		} catch(Exception $e) {
+    		benchmark_end(__METHOD__);
+    		$this->response(array('message' => $e->getMessage()),400);
+    	}
+	}
+
+	public function v1_delete_recurring_post()
+	{
+		try {
+			benchmark_start(__METHOD__);
+			$this->set_required_fields(array('recurring_id'));
+			$recurring_id = $this->get('recurring_id');
+
+			$this->load->model('recurring_charge_model');
+			$this->recurring_charge_model->delete_node($recurring_id);
+
+			benchmark_end(__METHOD__);
+			$this->response(array('status' => API_STATUS_OK));
 		} catch(Exception $e) {
     		benchmark_end(__METHOD__);
     		$this->response(array('message' => $e->getMessage()),400);
