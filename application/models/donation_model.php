@@ -68,7 +68,7 @@ class Donation_model extends MY_Model {
 		$organization_node = $this->organization_model->get_node_by_id($organization_id);
 		$organization_name = $organization_node['name'];
 
-		$reference_no = $this->donation_model->generate_reference_no();
+		$reference_no = $this->generate_reference_no();
 
 		$charge = $globe->payment(
 						    $globe_access_token,
