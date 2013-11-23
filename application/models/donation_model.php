@@ -30,6 +30,7 @@ class Donation_model extends MY_Model {
 		$new_reference_no = str_pad($new_reference_no, 6,"0",STR_PAD_LEFT);
 
 		$new_reference_no = "{$reference_prefix}{$new_reference_no}";
+		log_message('ERROR',"{$new_reference_no}");
 		return $new_reference_no;
 	}
 
