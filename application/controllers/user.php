@@ -126,7 +126,7 @@ class user extends MY_Controller {
 			$offset = ($page * DEFAULT_QUERY_LIMIT);
 			$limit = DEFAULT_QUERY_LIMIT;
 			$this->load->model('recurring_charge_model');
-			$sql = "SELECT recurring_charges.*, o.name
+			$sql = "SELECT c.*, o.name
 					FROM globelabs.recurring_charges c 
 					JOIN globelabs.organizations o on c.organization_id = o.id
 					WHERE c.user_id = '{$user_id}'
