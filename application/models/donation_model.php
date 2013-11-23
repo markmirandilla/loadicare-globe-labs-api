@@ -45,6 +45,61 @@ class Donation_model extends MY_Model {
 		return $new_reference_no;
 	}
 
+	public function charge($user_id,$organization_id,$beneficiary_id,$amount,$throw_exception = TRUE)
+	{
+
+		$this->load->model('organization_model');
+
+		$globelabs_config = $this->config->item('globelabs');
+		$reference_prefix = $globelabs_config['reference_prefix'];
+		$this->load->library('GlobeApi');
+		$globe = $this->globeapi;
+		$auth = $globe->auth(
+					    $globelabs_config['app_id'],
+					    $globelabs_config['app_secret']
+				);
+
+		//get user node
+		$user_node = $this->user_model->get_node_by_id($user_id);
+		$globe_access_token = $user_node['globe_access_token'];
+		$mobile_number = $user_node['mobile_number'];
+
+		//get organization node
+		$organization_node = $this->organization_model->get_node_by_id($organization_id);
+		$organization_name = $organization_node['name'];
+
+		$reference_no = $this->donation_model->generate_reference_no();
+
+		$charge = $globe->payment(
+						    $globe_access_token,
+						    $mobile_number
+						);
+		$charge->description = "Donation for {$organization_name}";
+		$response = $charge->charge(
+							    $amount,
+							    $reference_no
+							);
+		if(isset($response['error']))
+		{
+			if($throw_exception === TRUE) throw new Exception($response['error']);
+			return FALSE;
+		} else 
+		{
+			$this->donation_model->increment_reference_no();
+			$server_reference_code = $response['amountTransaction']['serverReferenceCode'];
+				
+			$data = array('reference_no' => $reference_no,
+						'organization_id' 	 => $organization_id,		
+						'beneficiary_id' 	 => $beneficiary_id,
+						'user_id' 			 => $user_id,
+						'mobile_no' 		 => $mobile_number,
+						'amount' 			 => $amount,
+						'server_reference_code' => $server_reference_code);
+			$this->create_transaction($data);
+			return TRUE;
+		}
+	}
+
 	public function create_transaction($data)
 	{
 		$organization_id = $data['organization_id'];
