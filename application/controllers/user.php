@@ -125,11 +125,19 @@ class user extends MY_Controller {
 			if(!has_value($page) && $page !== 0) $page = 0;
 			$offset = ($page * DEFAULT_QUERY_LIMIT);
 			$limit = DEFAULT_QUERY_LIMIT;
-
 			$this->load->model('recurring_charge_model');
+			$sql = "SELECT recurring_charges.*, o.name
+					FROM globelabs.recurring_charges c 
+					JOIN globelabs.organizations o on c.organization_id = o.id
+					WHERE c.user_id = '{$user_id}'
+					order by o.name";
+			$result = $this->db->query($sql)->result();
+			$result = $this->recurring_charge_model->format_nodes($result);
+
+			/*
 			$fields = array('user_id' => $user_id);
 			$result = $this->recurring_charge_model->get_node_by_fields($fields,$limit,$offset);
-
+			*/
 			benchmark_end(__METHOD__);
 			$this->response(array('result' => $result));
 		} catch(Exception $e) {
