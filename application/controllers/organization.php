@@ -28,4 +28,19 @@ class organization extends MY_Controller {
 		}
 	}
 
+	function v1_detail_get()
+	{
+		try {
+			benchmark_start(__METHOD__);
+			$this->set_required_fields(array('organization_id'));
+			$organization_id = $this->get('organization_id');
+			$result = $this->organization_model->get_node_by_id($organization_id);
+			benchmark_end(__METHOD__);
+			$this->response(array('result'=>$result));
+		} catch(Exception $e) {
+			benchmark_end(__METHOD__);
+    		$this->response(array('message' => $e->getMessage()),400);
+		}
+	}
+
 }
