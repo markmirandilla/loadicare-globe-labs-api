@@ -1,10 +1,10 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 /**
-* User node REST Model
+* Organization node REST Model
 * 
 * @package 		Globelabs
-* @subpackage 	User
-* @category    	Controllers
+* @subpackage 	Organization
+* @category    	Models
 * @author 		Mark Mirandilla | markmirandilla.com | mark.mirandilla@gmail.com
 * @version 		Version 1.0
 * 

@@ -4,7 +4,7 @@
 * 
 * @package 		Globelabs
 * @subpackage 	User
-* @category    	Controllers
+* @category    	Models
 * @author 		Mark Mirandilla | markmirandilla.com | mark.mirandilla@gmail.com
 * @version 		Version 1.0
 * 
@@ -115,20 +115,6 @@ class User_model extends MY_Model {
 	{
 		benchmark_start(__METHOD__);
 		$fields = array('facebook_id' => $facebook_id);
-		$result = $this->is_node_exist_by_fields($fields);
-		benchmark_end(__METHOD__);
-		return $result;
-	}
-
-	/**
-	 * Checks if a qr_code is already existing in the userbase
-	 * @param 	(string) 	$qr_code	
-	 * @return 	(boolean)
-	 **/
-	public function is_qr_code_exist($qr_code)
-	{
-		benchmark_start(__METHOD__);
-		$fields = array('qr_code' => $qr_code);
 		$result = $this->is_node_exist_by_fields($fields);
 		benchmark_end(__METHOD__);
 		return $result;

@@ -80,6 +80,7 @@ define('TABLE_USERS', 'users');
 define('TABLE_DONATIONS', 'donations');
 define('TABLE_ID_STORAGE', 'id_storage');
 define('TABLE_ORGANIZATIONS', 'organizations');
+define('TABLE_RECURRING_CHARGES', 'recurring_charges');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */

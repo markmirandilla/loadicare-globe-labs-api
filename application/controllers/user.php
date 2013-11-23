@@ -112,6 +112,60 @@ class user extends MY_Controller {
     	}
 	}
 
+	public function v1_recurring_get()
+	{
+
+	}
+
+	public function v1_recurring_post()
+	{
+		try {
+			benchmark_start(__METHOD__);
+			$this->set_required_fields(array('user_id','organization_id','frequency','start_date'));
+			$user_id = $this->post('user_id');
+			$organization_id = $this->post('organization_id');
+			$frequency = $this->post('frequency');
+			$amount = $this->post('amount');
+			$start_date = $this->post('start_date');
+
+			if($start_date === date('Y-m-d'))
+			{
+				$next_charge_date = date('Y-m-d');
+			} else
+			{
+				switch($frequency)
+				{
+					case 'day':
+						$next_charge_date = date('Y-m-d', strtotime($start_date. ' + 1 days'));
+					break;
+					case 'week':
+						$next_charge_date = date('Y-m-d', strtotime($start_date. ' + 7 week'));
+					break;
+					case 'month':
+						$next_charge_date = date('Y-m-d', strtotime($start_date. ' + 1 month'));
+					break;
+					default:
+					throw new Exception('Invalid frequency parameter');
+				}
+			}
+			$data = array();
+			$data['user_id'] = $user_id;
+			$data['organization_id'] = $organization_id;
+			$data['frequency'] 		 = $frequency;
+			$data['amount'] 		  = $amount;
+			$data['start_date'] 	  = $start_date;
+			$data['next_charge_date'] = $next_charge_date;
+			$this->load->model('recurring_charge_model');
+			$recurring_charge_node = $this->recurring_charge_model->create_node($data);
+
+			benchmark_end(__METHOD__);
+			$this->response(array('result' => $recurring_charge_node));
+		} catch(Exception $e) {
+    		benchmark_end(__METHOD__);
+    		$this->response(array('message' => $e->getMessage()),400);
+    	}
+	}
+
 	public function v1_access_token_post()
 	{
 		try {
