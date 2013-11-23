@@ -122,12 +122,12 @@ if (defined('ENVIRONMENT'))
  *
  */
 	// $assign_to_config['name_of_config_item'] = 'value of config item';
-
+/*
 //[Mark] Fix for PHP 5.4
 if( ! ini_get('date.timezone') )
 {
    date_default_timezone_set('GMT');
-} 
+} */
 
 
 // --------------------------------------------------------------------

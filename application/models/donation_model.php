@@ -112,7 +112,8 @@ class Donation_model extends MY_Model {
 		$data = array();
 		$data['total_funds'] = $total_donations;
 		$this->set_node_table(TABLE_ORGANIZATIONS)->update_node($organization_id,$data);
-
+		$sql = $this->db->last_query();
+		log_message('ERROR',$sql);
 	}
 
 }
