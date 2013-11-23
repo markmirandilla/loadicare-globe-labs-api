@@ -148,7 +148,7 @@ class MY_Model extends CI_Model {
 		benchmark_start(__METHOD__);
 		if(!has_value($table)) $table = $this->mTable;
 		$data['date_updated'] = time();
-		log_message('info','Params: '.print_r($data,TRUE) ." node_id: {$node_id}");
+		log_message('DEBUG','Params: '.print_r($data,TRUE) ." node_id: {$node_id}");
 
 		//set geospatial point column
 		if(isset($data['latitude']) && isset($data['longitude']))
@@ -158,11 +158,13 @@ class MY_Model extends CI_Model {
 		
 		$this->db->where('id', $node_id)
 				 ->update($table, $data);
+		$sql = $this->db->last_query();
+		log_message('DEBUG',$sql);
 		$this->_break_node_cache($node_id);
 		$orig_table = $this->mTable;
 		$node = $this->set_node_table($table)->get_node_by_id($node_id);
 		$this->set_node_table($orig_table); //return to the original default table
-		log_message('info','Updated node: '.print_r($data,TRUE));
+		log_message('DEBUG','Updated node: '.print_r($data,TRUE));
 		benchmark_end(__METHOD__);
 		return $node;
 	}
