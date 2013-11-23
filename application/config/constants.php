@@ -77,6 +77,7 @@ define('DB_GLOBELABS', 'globelabs');
 |
 */
 define('TABLE_USERS', 'users');
+define('TABLE_ORGANIZATIONS', 'organizations');
 
 /* End of file constants.php */
 /* Location: ./application/config/constants.php */
