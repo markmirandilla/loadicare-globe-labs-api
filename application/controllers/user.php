@@ -112,9 +112,30 @@ class user extends MY_Controller {
     	}
 	}
 
+	
+
 	public function v1_recurring_get()
 	{
+		try {
+			benchmark_start(__METHOD__);
+			$this->set_required_fields(array('user_id'));
+			$page = $this->get('page');
+			$user_id = $this->get('user_id');
 
+			if(!has_value($page) && $page !== 0) $page = 0;
+			$offset = ($page * DEFAULT_QUERY_LIMIT);
+			$limit = DEFAULT_QUERY_LIMIT;
+
+			$this->load->model('recurring_charge_model');
+			$fields = array('user_id' => $user_id);
+			$result = $this->recurring_charge_model->get_node_by_fields($fields,$limit,$offset);
+
+			benchmark_end(__METHOD__);
+			$this->response(array('result' => $result));
+		} catch(Exception $e) {
+    		benchmark_end(__METHOD__);
+    		$this->response(array('message' => $e->getMessage()),400);
+    	}
 	}
 
 	public function v1_recurring_post()
