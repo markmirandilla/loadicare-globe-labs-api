@@ -82,7 +82,7 @@ class cron extends CI_Controller {
 				$organization_node = $this->organization_model->get_node_by_id($organization_id);
 				$organization_name = $organization_node['name'];
 
-				$message = "LOADICARE: You donation to {$organization_name} would take effect tomorrow at 12am. Please make sure you have sufficient load balance. Thank you! (free)";
+				$message = "LOADICARE: Your donation to {$organization_name} would take effect tomorrow at 12am. Please make sure you have sufficient load balance. Thank you! (free)";
 				$sms = $globe->sms($reference_prefix)
 							 ->sendMessage($globe_access_token, $mobile_number, $message);
 			}
