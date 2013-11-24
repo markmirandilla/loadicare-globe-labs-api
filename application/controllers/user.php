@@ -238,7 +238,7 @@ class user extends MY_Controller {
 						  'has_globe_access_token' => (int) 1);
 			$user_node = $this->user_model->set_as_public(TRUE)->update_node($user_id,$data);
 			benchmark_end(__METHOD__);
-			$this->response(array('result' => $user_node));
+			$this->response(array('result' => array('user' => $user_node)));
 		} catch(Exception $e) {
     		benchmark_end(__METHOD__);
     		$this->response(array('message' => $e->getMessage()),400);
