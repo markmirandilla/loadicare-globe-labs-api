@@ -179,7 +179,7 @@ class user extends MY_Controller {
 				switch($frequency)
 				{
 					case 'day':
-						$next_charge_date = date('Y-m-d', strtotime($start_date. ' + 1 days'));
+						$next_charge_date = $start_date;
 					break;
 					case 'week':
 						$next_charge_date = date('Y-m-d', strtotime($start_date. ' + 7 week'));
